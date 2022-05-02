@@ -1,64 +1,5 @@
 # YOLOV3
----
-# Introduction
-This is my own YOLOV3 written in pytorch, and is also the first time i have reproduced a object detection model.The dataset used is PASCAL VOC. The eval tool is the voc2010. Now the mAP gains the goal score.
 
-Subsequently, i will continue to update the code to make it more concise , and add the new and efficient tricks.
-
-`Note` : Now this repository supports the model compression in the new branch [model_compression](https://github.com/Peterisfar/YOLOV3/tree/model_compression)
-
----
-## Results
-
-
-| name | Train Dataset | Val Dataset | mAP(others) | mAP(mine) | notes |
-| :----- | :----- | :------ | :----- | :-----| :-----|
-| YOLOV3-448-544 | 2007trainval + 2012trainval | 2007test | 0.769 | 0.768 \| - | baseline(augument + step lr) |
-| YOLOV3-\*-544 | 2007trainval + 2012trainval | 2007test | 0.793 | 0.803 \| - | \+multi-scale training |
-| YOLOV3-\*-544 | 2007trainval + 2012trainval | 2007test | 0.806 | 0.811 \| - | \+focal loss(note the conf_loss in the start is lower) |
-| YOLOV3-\*-544 | 2007trainval + 2012trainval | 2007test | 0.808 | 0.813 \| - | \+giou loss |
-| YOLOV3-\*-544 | 2007trainval + 2012trainval | 2007test | 0.812 | 0.821 \| - | \+label smooth |  
-| YOLOV3-\*-544 | 2007trainval + 2012trainval | 2007test | 0.822 | 0.826 \| - | \+mixup |  
-| YOLOV3-\*-544 | 2007trainval + 2012trainval | 2007test | 0.833 | 0.832 \| 0.840 | \+cosine lr |
-| YOLOV3-\*-* | 2007trainval + 2012trainval | 2007test | 0.858 | 0.858 \| 0.860 | \+multi-scale test and flip, nms threshold is 0.45 |  
-
-`Note` : 
-
-* YOLOV3-448-544 means train image size is 448 and test image size is 544. `"*"` means the multi-scale.
-* mAP(mine)'s format is (use_difficult mAP | no_difficult mAP).
-* In the test, the nms threshold is 0.5(except the last one) and the conf_score is 0.01.`others` nms threshold is 0.45(0.45 will increase the mAP)
-* Now only support the single gpu to train and test.
-
-
----
-## Environment
-
-* Nvida GeForce RTX 2080 Ti
-* CUDA10.0
-* CUDNN7.0
-* ubuntu 16.04
-* python 3.5
-```bash
-# install packages
-pip3 install -r requirements.txt --user
-```
-
----
-## Brief
-
-* [x] Data Augment (RandomHorizontalFlip, RandomCrop, RandomAffine, Resize)
-* [x] Step lr Schedule 
-* [x] Multi-scale Training (320 to 640)
-* [x] focal loss
-* [x] GIOU
-* [x] Label smooth
-* [x] Mixup
-* [x] cosine lr
-* [x] Multi-scale Test and Flip
-
-
-
----
 ## Prepared work
 
 ### 1、Git clone YOLOV3 repository
@@ -110,20 +51,5 @@ CUDA_VISIBLE_DEVICES=0 python3 test.py --weight_path $WEIGHT_PATH --gpu_id 0 --v
 
 ```
 The images can be seen in the `data/`
-
----
-## TODO
-
-* [ ] Mish
-* [ ] OctConv
-* [ ] Custom data
-
-
----
-## Reference
-
-* tensorflow : https://github.com/Stinky-Tofu/Stronger-yolo
-* pytorch : https://github.com/ultralytics/yolov3
-* keras : https://github.com/qqwweee/keras-yolo3
 
 
